@@ -1,0 +1,88 @@
+﻿@model HospitalMangeTask.Models.Doctor
+@{
+    Layout = null;
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<!--
+Template Name: Midone - HTML Admin Dashboard Template
+Author: Left4code
+Website: http://www.left4code.com/
+Contact: muhammadrizki@left4code.com
+Purchase: https://themeforest.net/user/left4code/portfolio
+Renew Support: https://themeforest.net/user/left4code/portfolio
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<html lang="en">
+<!-- BEGIN: Head -->
+<head>
+    <meta charset="utf-8">
+    <link href="~/areas/admin/dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="LEFT4CODE">
+    <title>CRUD Data List - Midone - Tailwind HTML Admin Template</title>
+    <!-- BEGIN: CSS Assets-->
+    <link rel="stylesheet" href="~/areas/admin/dist\css\app-1.css">
+    <!-- END: CSS Assets-->
+</head>
+<!-- END: Head -->
+<body class="app">
+    <div class="intro-y flex items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto" style="color:white !important">
+            Update Doctor
+        </h2>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 lg:col-span-6">
+            <!-- BEGIN: Form Layout -->
+            <div class="intro-y box p-5">
+                <form asp-area="admin" asp-controller="Doctor" asp-action="update" method="post">
+                    <div class="text-danger" style="color:red;" asp-validation-summary="All"></div>
+                    <input asp-for="Id" hidden />
+
+                    <div>
+                        <label>Name</label>
+                        <input type="text" asp-for="Name" class="input w-full border mt-2" placeholder="Input Name">
+                        <span asp-validation-for="Name" style="color:red;"></span>
+                    </div>
+                    <div>
+                        <label>Surname</label>
+                        <input type="text" asp-for="Surname" class="input w-full border mt-2" placeholder="Input Surname">
+                        <span asp-validation-for="Surname" style="color:red;"></span>
+                    </div>
+                    <div>
+                        <label>Age</label>
+                        <input type="number" asp-for="Age" class="input w-full border mt-2" placeholder="Input Age">
+                        <span asp-validation-for="Age" style="color:red;"></span>
+                    </div>
+                    <div>
+                        <label>Rank</label>
+                        <input type="text" asp-for="Rank" class="input w-full border mt-2" placeholder="Input Rank">
+                        <span asp-validation-for="Rank" style="color:red;"></span>
+                    </div>
+                    <div>
+                        <label>Experirence</label>
+                        <input type="number" asp-for="Experience" class="input w-full border mt-2" placeholder="Input Experience">
+                        <span asp-validation-for="Experience" style="color:red;"></span>
+                    </div>
+                    <div class="text-right mt-5">
+                        <a asp-area="admin" asp-controller="Doctor" asp-action="index" class="button w-24 border text-gray-700 mr-1">Cancel</a>
+                        <button type="submit" class="button w-24 bg-theme-1 text-white">Update</button>
+                    </div>
+                </form>
+            </div>
+            <!-- END: Form Layout -->
+        </div>
+    </div>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG7gNHAhDzgYmq4-EHvM4bqW1DNj2UCuk&libraries=places"></script>
+    <script src="~/areas/admin/dist\js\app-1.js"></script>
+
+    <!-- END: JS Assets-->
+</body>
+</html>

@@ -1,0 +1,219 @@
+﻿@model List<HospitalMangeTask.Models.Doctor>
+@using Microsoft.AspNetCore.Identity
+@using HospitalMangeTask
+@inject AppDbContext _context
+@inject UserManager<IdentityUser> userManager
+@inject SignInManager<IdentityUser> signInManager
+@inject RoleManager<IdentityRole> roleManager
+@{
+    ViewData["Title"] = "Index";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<!--
+Template Name: Midone - HTML Admin Dashboard Template
+Author: Left4code
+Website: http://www.left4code.com/
+Contact: muhammadrizki@left4code.com
+Purchase: https://themeforest.net/user/left4code/portfolio
+Renew Support: https://themeforest.net/user/left4code/portfolio
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<html lang="en">
+<!-- BEGIN: Head -->
+<head>
+    <meta charset="utf-8">
+    <link href="~/areas/admin/dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="LEFT4CODE">
+    <title>CRUD Data List - Midone - Tailwind HTML Admin Template</title>
+    <!-- BEGIN: CSS Assets-->
+    <link rel="stylesheet" href="~/areas/admin/dist\css\app-1.css">
+    <!-- END: CSS Assets-->
+</head>
+<!-- END: Head -->
+<body class="app">
+    <!-- BEGIN: Mobile Menu -->
+    <div class="mobile-menu md:hidden">
+        <div class="mobile-menu-bar">
+            <a href="" class="flex mr-auto">
+                <img alt="Midone Tailwind HTML Admin Template" class="w-6" src="areas/admin/dist\images\logo.svg">
+            </a>
+            <a href="javascript:;" id="mobile-menu-toggler"> <i data-feather="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+        </div>
+        <ul class="border-t border-theme-24 py-5 hidden">
+
+            <li class="menu__devider my-6"></li>
+            <li>
+                <a href="javascript:;.html" class="menu menu--active">
+                    <div class="menu__icon"> <i data-feather="edit"></i> </div>
+                    <div class="menu__title"> Crud <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                </a>
+                <ul class="menu__sub-open">
+                    <li>
+                        <a href="side-menu-crud-data-list.html" class="menu menu--active">
+                            <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="menu__title"> Data List </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="side-menu-crud-form.html" class="menu">
+                            <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="menu__title"> Form </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+    <!-- END: Mobile Menu -->
+    <div class="flex">
+        <!-- BEGIN: Side Menu -->
+        <nav class="side-nav">
+            <a href="" class="intro-x flex items-center pl-5 pt-4">
+                <span class="hidden xl:block text-white text-lg ml-3"> Mid<span class="font-medium">one</span> </span>
+            </a>
+            <div class="side-nav__devider my-6"></div>
+            <ul>
+                <li class="side-nav__devider my-6"></li>
+                <li>
+                    <a href="javascript:;.html" class="side-menu side-menu--active">
+                        <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
+                        <div class="side-menu__title"> Crud <i data-feather="chevron-down" class="side-menu__sub-icon"></i> </div>
+                    </a>
+
+                </li>
+
+            </ul>
+        </nav>
+        <!-- END: Side Menu -->
+        <!-- BEGIN: Content -->
+        <div class="content">
+            <!-- BEGIN: Top Bar -->
+            <div class="top-bar">
+                <!-- BEGIN: Breadcrumb -->
+                <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i data-feather="chevron-right" class="breadcrumb__icon"></i> <a href="" class="breadcrumb--active">Dashboard</a> </div>
+                <!-- END: Breadcrumb -->
+                <!-- BEGIN: Search -->
+
+            
+                <!-- END: Notifications -->
+                <!-- BEGIN: Account Menu -->
+                <div class="intro-x dropdown w-8 h-8 relative">
+                    <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
+                        <img alt="Midone Tailwind HTML Admin Template" src="/areas/admin/dist\images\illustration.svg">
+
+                    </div>
+                    <div class="dropdown-box mt-10 absolute w-56 top-0 right-0 z-20">
+                        <div class="dropdown-box__content box bg-theme-38 text-white">
+
+
+                            <div class="p-2 border-t border-theme-40">
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                                    <p style="text-align:center; padding:10px 7px 2px 3px;">@roleManager.Roles.FirstOrDefault(r => r.Id == _context.UserRoles.FirstOrDefault(r => r.UserId == userManager.GetUserId(User)).RoleId).Name</p>
+
+                                    <p style="text-align:center; padding:19px 8px">
+                                        @userManager.GetUserName(User)
+                                    </p>}
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Account" asp-action="Logout"><i class="feather-power"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Account Menu -->
+            </div>
+            <!-- END: Top Bar -->
+            <h2 class="intro-y text-lg font-medium mt-10">
+                Data List Layout
+            </h2>
+            <div class="grid grid-cols-12 gap-6 mt-5">
+                <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center mt-2">
+                    @*<a class="button text-white bg-theme-1 shadow-md mr-2" asp-area="admin" asp-controller="Doctor" asp-action="create">Add New Product</a>*@
+                    <a class="button-create text-white bg-theme-1 shadow-md mr-2" asp-area="admin" asp-controller="Doctor" asp-action="create" style="font-size:14px; padding:13px 24px 16px 23px; background:#323584;">Create Contact</a>
+
+                </div>
+                <!-- BEGIN: Data List -->
+                <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+                    <table class="table table-report -mt-2">
+                        <thead>
+                            <tr>
+                                <th class="whitespace-no-wrap">Number</th>
+                                <th class="whitespace-no-wrap">Name</th>
+                                <th class="text-center whitespace-no-wrap">Surname</th>
+                                <th class="text-center whitespace-no-wrap">Age</th>
+                                <th class="text-center whitespace-no-wrap">Rank</th>
+                                <th class="text-center whitespace-no-wrap">Experience</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{ int i = 0;}
+                            @foreach (var item in Model)
+                            {
+                                i++;
+
+                            <tr class="intro-x">
+                                
+                                <td class="text-center">
+                                    @i
+                                </td>
+
+                                <td class="text-center">@item.Name</td>
+
+                                <td class="text-center">@item.Surname</td>
+                                <td class="text-center">@item.Age</td>
+                                <td class="text-center">@item.Rank</td>
+                                <td class="text-center">@item.Experience</td>
+
+
+                                <td class="table-report__action w-56">
+                                    <div class="flex justify-center items-center">
+                                        <a class="flex items-center mr-3" asp-area="admin" asp-controller="Doctor" asp-action="update" asp-route-doctorId="@item.Id"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+
+                                        <a asp-area="admin" asp-controller="Doctor" asp-action="delete" asp-route-doctorId="@item.Id" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-white text-danger mr-2 d-flex" style="display:flex !important"><i data-feather="trash-2" class="w-4 h-4 mr-1"></i>Delete</a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- END: Pagination -->
+            </div>
+            <!-- BEGIN: Delete Confirmation Modal -->
+            <div class="modal" id="delete-confirmation-modal">
+                <div class="modal__content">
+                    <div class="p-5 text-center">
+                        <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
+                        <div class="text-3xl mt-5">Are you sure?</div>
+                        <div class="text-gray-600 mt-2">Do you really want to delete these records? This process cannot be undone.</div>
+                    </div>
+                    <div class="px-5 pb-8 text-center">
+                        <button type="button" data-dismiss="modal" class="button w-24 border text-gray-700 mr-1">Cancel</button>
+                        <button type="button" class="button w-24 bg-theme-6 text-white">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Delete Confirmation Modal -->
+        </div>
+        <!-- END: Content -->
+    </div>
+    <!-- BEGIN: JS Assets-->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG7gNHAhDzgYmq4-EHvM4bqW1DNj2UCuk&libraries=places"></script>
+    <script src="~/areas/admin/dist\js\app-1.js"></script>
+
+    <!-- END: JS Assets-->
+</body>
+</html>
